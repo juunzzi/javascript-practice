@@ -27,3 +27,15 @@ function setTimer(timestamp, start) {
 }
 setTimer(new Date().getTime(), 0);
 // rAF();
+
+class hi {
+  constructor() {
+    this.x = 1;
+  }
+  get x() {
+    return x + 1;
+  }
+}
+const hhh = new hi();
+hhh.x = 20;
+console.log(hhh.x);
