@@ -1,28 +1,31 @@
-// const app = document.querySelector("#app");
+// // const app = document.querySelector("#app");
 
-// const event = new CustomEvent("animal", {
-//   detail: {
-//     data: 1,
-//   },
-// });
+import { bind, dispatch } from "./eventFactory.js";
 
-// app.addEventListener("animal", (e) => {
-//   console.log(e.detail.data);
-// });
+class B {
+  constructor() {
+    this.$app = document.querySelector("#app1");
+    this.#bindEventHandler();
+  }
+  #bindEventHandler() {
+    this.$app.addEventListener("click", (e) => dispatch("clickHandler"));
+  }
+}
+class A {
+  customEvent = null;
+  constructor() {
+    this.#bindEventHandler();
+  }
+  #onClickHandler = () => {
+    // 비즈니스
+    // 로직 군..
+    console.log("hi");
+  };
 
-// app.addEventListener("click", () => {
-//   app.dispatchEvent(event);
-// });
+  #bindEventHandler() {
+    bind("clickHandler", this.#onClickHandler);
+  }
+}
 
-const app1 = document.querySelector("#app1");
-const app2 = document.querySelector("#app2");
-
-const app1event = new CustomEvent("event");
-
-app1.addEventListener("event", () => {
-  console.log("app1");
-});
-
-app2.addEventListener("click", () => {
-  app1.dispatchEvent(app1event);
-});
+const a = new A();
+const b = new B();

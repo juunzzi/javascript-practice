@@ -1,44 +1,23 @@
 function fetcher(api_url, path, option) {
-  // 기본값의 초기화를 함수 내부에서 수행한다.
-  option = option || {};
-
-  // const data = await fetch(`${api_url}/${path}`, option);
-
-  // if (data.statusText === "OK") {
-  //   return data.json();
-  // }
-
-  // throw new Error("error");
-
   console.log(api_url);
   console.log(path);
   console.log(option);
 }
 function curry(func) {
-  let parameters = [];
-  return function helper(...args) {
-    parameters = parameters.concat(args.length ? args : undefined);
-
+  return function helper(...saveArgs) {
     const { length: argsLength } = func;
-
-    if (parameters.length < argsLength) {
-      return helper;
+    if (saveArgs.length < argsLength) {
+      // 피가.. 아니 인자가 부족해..
+      return function (...args) {
+        return helper(...saveArgs.concat(args.length ? args : undefined));
+      };
     }
-
-    const tempParameters = parameters;
-    //cache clear
-    parameters = [];
-    return func(...tempParameters);
+    // 모든게 완벽하니 진짜 함수를 내어줌
+    return func(...saveArgs);
   };
 }
 
 const curriedFetcher = curry(fetcher);
-
-// option 만 바꿔서 사용할 수 있는 fetcher가 탄생
-const juunzziServerToGetCommentsFetcher =
-  curriedFetcher("juunzzi_server")("/getComments");
-
-juunzziServerToGetCommentsFetcher({});
 
 const juunzziServerFetcher = curriedFetcher("juunzzi_server");
 
