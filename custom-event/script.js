@@ -2,15 +2,20 @@
 
 import { bind, dispatch } from "./eventFactory.js";
 
+// 하위 컴포넌트
+
 class B {
   constructor() {
     this.$app = document.querySelector("#app1");
     this.#bindEventHandler();
   }
   #bindEventHandler() {
-    this.$app.addEventListener("click", (e) => dispatch("clickHandler"));
+    this.$app.addEventListener("click", (e) => dispatch("clickHandler", e));
   }
 }
+
+// AppComponent
+
 class A {
   customEvent = null;
   constructor() {
@@ -24,6 +29,8 @@ class A {
 
   #bindEventHandler() {
     bind("clickHandler", this.#onClickHandler);
+
+    addEventListener(eventType, this.#onRealClickHandler);
   }
 }
 

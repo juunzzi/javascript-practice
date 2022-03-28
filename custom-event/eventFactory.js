@@ -1,14 +1,11 @@
 export const { bind, dispatch } = (function () {
-  const eventHandlers = {};
+  const customEvents = {};
   return {
     bind: (key, handler) => {
-      //   customEvents[type] = new CustomEvent(type);
-      eventHandlers[key] = handler;
+      customEvents[key] = new CustomEvent(key);
     },
     dispatch: (key, e) => {
-      //   dispatchEvent(customEvents[type]);
-      const handler = eventHandlers[key];
-      handler(e);
+      dispatchEvent(customEvents[key]);
     },
   };
 })();
